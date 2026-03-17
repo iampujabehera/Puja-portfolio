@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Puja Behera — Product Manager · AI · Fintech</title>
+  <meta name="description" content="PM with engineering roots shipping real AI products." />
+  <meta property="og:title" content="Puja Behera — Product Manager · AI · Fintech" />
+  <meta property="og:description" content="PM with engineering roots shipping real AI products." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #FAFAF8;
+      --text: #111111;
+      --secondary: #666666;
+      --purple: #7C3AED;
+      --purple-light: #F3F0FF;
+      --amber: #F59E0B;
+      --blue: #2563EB;
+      --white: #FFFFFF;
+      --card-bg: #FFFFFF;
+      --border: #E5E5E0;
+      --max: 1100px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    .serif { font-family: 'Fraunces', Georgia, serif; }
+
+    /* ── NAV ──────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    nav.scrolled {
+      background: rgba(250, 250, 248, 0.92);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 var(--border);
+    }
+
+    .nav-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Fraunces', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0; right: 0;
+      height: 2px;
+      background: var(--purple);
+      transform: scaleX(0);
+      transition: transform 0.2s;
+      transform-origin: left;
+    }
+
+    .nav-links a:hover { color: var(--purple); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    .nav-cta {
+      background: var(--purple);
+      color: white !important;
+      padding: 8px 20px;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s !important;
+    }
+
+    .nav-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+    .nav-cta::after { display: none !important; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text);
+      transition: all 0.25s;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      padding: 12px 24px 20px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s;
+    }
+
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { color: var(--purple); }
+
+    /* ── FADE-UP ──────────────────────────────── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up.delay-1 { transition-delay: 0.1s; }
+    .fade-up.delay-2 { transition-delay: 0.2s; }
+    .fade-up.delay-3 { transition-delay: 0.3s; }
+    .fade-up.delay-4 { transition-delay: 0.4s; }
+
+    /* ── LAYOUT ───────────────────────────────── */
+    .container {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    section { position: relative; }
+
+    /* ── BUTTONS ──────────────────────────────── */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--purple);
+      color: white;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 14px 28px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+      box-shadow: 0 4px 14px rgba(124, 58, 237, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(124, 58, 237, 0.45);
+      opacity: 0.93;
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 13px 27px;
+      text-decoration: none;
+      border: 2px solid var(--text);
+      cursor: pointer;
+      transition: transform 0.2s, background 0.2s, color 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background: var(--text);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* ── HERO ─────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 80px 0 60px;
+      background: var(--bg);
+      overflow: hidden;
+    }
+
+    .hero-bg-blob {
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(124,58,237,0.08) 0%, transparent 70%);
+      pointer-events: none;
+      animation: blobPulse 8s ease-in-out infinite;
+    }
+
+    .hero-bg-blob-2 {
+      position: absolute;
+      bottom: -150px; left: -150px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(37,99,235,0.06) 0%, transparent 70%);
+      pointer-events: none;
+      animation: blobPulse 10s ease-in-out infinite reverse;
+    }
+
+    @keyframes blobPulse {
+      0%, 100% { transform: scale(1) translate(0,0); }
+      50% { transform: scale(1.1) translate(20px, -20px); }
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 80px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--purple-light);
+      color: var(--purple);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+      border: 1px solid rgba(124,58,237,0.2);
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 7px; height: 7px;
+      background: var(--purple);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.6; }
+    }
+
+    .hero-headline {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(44px, 5.5vw, 64px);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+
+    .hero-subline {
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--purple);
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+
+    .hero-para {
+      font-size: 17px;
+      color: var(--secondary);
+      max-width: 520px;
+      margin-bottom: 32px;
+      line-height: 1.8;
+      font-weight: 400;
+    }
+
+    .hero-domain-tags {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+
+    .domain-pill {
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 100px;
+    }
+
+    .domain-pill.health {
+      background: #FFF0F5; color: #BE185D;
+      border: 1px solid #FECDD3;
+    }
+
+    .domain-pill.fintech {
+      background: #FFF9F0; color: #B45309;
+      border: 1px solid #FDE68A;
+    }
+
+    .domain-pill.enterprise {
+      background: #EFF6FF; color: #1D4ED8;
+      border: 1px solid #BFDBFE;
+    }
+
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    /* ── PHOTO ────────────────────────────────── */
+    .hero-photo-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .photo-ring {
+      position: relative;
+      width: 380px; height: 380px;
+      border-radius: 50%;
+      padding: 5px;
+      background: linear-gradient(135deg, var(--purple) 0%, var(--blue) 50%, var(--amber) 100%);
+      box-shadow: 0 24px 60px rgba(124, 58, 237, 0.3);
+      animation: photoFloat 5s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes photoFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+
+    .photo-ring img {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 20%;
+      display: block;
+      background: var(--purple-light);
+    }
+
+    /* ── STATS ────────────────────────────────── */
+    #stats {
+      background: linear-gradient(135deg, var(--purple) 0%, var(--blue) 100%);
+      padding: 80px 0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .stat-item {
+      background: transparent;
+      padding: 48px 32px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(40px, 5vw, 58px);
+      font-weight: 700;
+      color: var(--amber);
+      line-height: 1;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: rgba(255,255,255,0.8);
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    /* ── ABOUT ────────────────────────────────── */
+    #about {
+      background: var(--purple-light);
+      padding: 100px 0;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .about-bio-text {
+      font-size: 18px;
+      color: var(--text);
+      line-height: 1.85;
+      font-weight: 400;
+    }
+
+    .about-bio-text strong {
+      color: var(--purple);
+      font-weight: 600;
+    }
+
+    .about-bio-text p + p { margin-top: 20px; }
+
+    .timeline-wrap { padding-top: 4px; }
+
+    .timeline-item {
+      display: flex;
+      gap: 20px;
+      padding-bottom: 32px;
+      position: relative;
+    }
+
+    .timeline-item:not(:last-of-type)::before {
+      content: '';
+      position: absolute;
+      left: 8px; top: 20px; bottom: 0;
+      width: 1px;
+      background: rgba(124, 58, 237, 0.2);
+    }
+
+    .tl-dot {
+      width: 17px; height: 17px;
+      border-radius: 50%;
+      background: var(--purple);
+      border: 3px solid var(--purple-light);
+      flex-shrink: 0;
+      margin-top: 4px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tl-role {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .tl-company { color: var(--purple); }
+
+    .tl-year {
+      font-size: 12px;
+      color: var(--secondary);
+      margin: 3px 0 6px;
+    }
+
+    .tl-impact {
+      font-size: 14px;
+      color: var(--secondary);
+      line-height: 1.5;
+    }
+
+    .edu-block {
+      margin-top: 8px;
+      padding: 16px 20px;
+      background: rgba(124,58,237,0.07);
+      border-left: 3px solid var(--purple);
+    }
+
+    .edu-block p {
+      font-size: 13px;
+      color: var(--secondary);
+      line-height: 1.6;
+    }
+
+    .edu-block strong {
+      color: var(--text);
+      font-weight: 600;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* ── PROJECTS ─────────────────────────────── */
+    #projects {
+      padding: 100px 0;
+      background: var(--bg);
+    }
+
+    .section-eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--purple);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .section-headline {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(36px, 4.5vw, 52px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+
+    .section-subline {
+      font-size: 18px;
+      color: var(--secondary);
+      margin-bottom: 56px;
+      font-weight: 400;
+    }
+
+    .projects-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+
+    .project-card:not(.dimmed):hover {
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+      transform: scale(1.005);
+    }
+
+    .project-card.dimmed { opacity: 0.55; }
+
+    .card-band { height: 6px; }
+    .band-blue   { background: linear-gradient(90deg, #2563EB, #7C3AED); }
+    .band-purple { background: linear-gradient(90deg, #7C3AED, #EC4899); }
+    .band-amber  { background: linear-gradient(90deg, #F59E0B, #EF4444); }
+    .band-gray   { background: linear-gradient(90deg, #D1D5DB, #9CA3AF); }
+
+    .project-header {
+      padding: 28px 28px 24px;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .project-card.dimmed .project-header { cursor: default; }
+
+    .project-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--secondary);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .project-title {
+      font-family: 'Fraunces', serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+
+    .project-card-1 .project-title { color: #1D4ED8; }
+    .project-card-2 .project-title { color: #6D28D9; }
+    .project-card-3 .project-title { color: #B45309; }
+
+    .project-oneliner {
+      font-size: 17px;
+      color: var(--secondary);
+      margin-bottom: 16px;
+      line-height: 1.55;
+    }
+
+    .tag-row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    .tag {
+      font-size: 11px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border: 1px solid var(--border);
+      color: var(--secondary);
+    }
+
+    .tag.blue   { border-color: #BFDBFE; color: #1D4ED8; background: #EFF6FF; }
+    .tag.purple { border-color: #DDD6FE; color: #6D28D9; background: #F5F3FF; }
+    .tag.amber  { border-color: #FDE68A; color: #92400E; background: #FFFBEB; }
+
+    .project-header-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .project-links { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+
+    .project-link {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--blue);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+
+    .project-link:hover { opacity: 0.7; text-decoration: underline; }
+    .project-card-2 .project-link { color: var(--purple); }
+    .project-card-3 .project-link { color: var(--amber); }
+
+    .toggle-btn {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: var(--secondary);
+      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1),
+                  border-color 0.2s, background 0.2s;
+      flex-shrink: 0;
+    }
+
+    .project-card.open .toggle-btn {
+      transform: rotate(180deg);
+      border-color: var(--purple);
+      background: var(--purple-light);
+      color: var(--purple);
+    }
+
+    .project-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .project-body-inner {
+      padding: 28px 28px 32px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      border-top: 1px solid var(--border);
+      background: #FAFAF8;
+    }
+
+    .case-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .case-label.red   { color: #DC2626; }
+    .case-label.blue  { color: #2563EB; }
+    .case-label.amber { color: #D97706; }
+
+    .case-text {
+      font-size: 14px;
+      color: var(--secondary);
+      line-height: 1.75;
+    }
+
+    .in-progress-badge {
+      font-size: 11px;
+      font-weight: 600;
+      color: #92400E;
+      background: #FEF3C7;
+      border: 1px solid #FDE68A;
+      padding: 3px 10px;
+      letter-spacing: 0.06em;
+      border-radius: 100px;
+    }
+
+    .coming-soon-body {
+      padding: 0 28px 28px;
+      font-size: 15px;
+      color: var(--secondary);
+    }
+
+    /* ── STACK ────────────────────────────────── */
+    #stack {
+      background: var(--bg);
+      padding: 100px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+
+    .stack-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 32px 28px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .stack-card:hover {
+      box-shadow: 0 8px 28px rgba(0,0,0,0.09);
+      transform: translateY(-3px);
+    }
+
+    .stack-col-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--purple);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stack-col-label::before {
+      content: '';
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--purple);
+    }
+
+    .stack-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+
+    .stack-list li {
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .stack-list li::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--purple);
+      flex-shrink: 0;
+      opacity: 0.5;
+    }
+
+    /* ── CONTACT ──────────────────────────────── */
+    #contact {
+      background: linear-gradient(135deg, var(--purple) 0%, var(--blue) 100%);
+      padding: 120px 0 80px;
+      text-align: center;
+    }
+
+    .contact-headline {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(40px, 5.5vw, 56px);
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+
+    .contact-sub {
+      font-size: 18px;
+      color: rgba(255,255,255,0.8);
+      max-width: 520px;
+      margin: 0 auto 44px;
+      font-weight: 400;
+      line-height: 1.7;
+    }
+
+    .contact-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    .btn-white {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: white;
+      color: var(--purple);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 14px 28px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    }
+
+    .btn-white:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.2);
+    }
+
+    .btn-white-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: transparent;
+      color: white;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 13px 27px;
+      text-decoration: none;
+      border: 2px solid rgba(255,255,255,0.5);
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+    }
+
+    .btn-white-outline:hover {
+      border-color: white;
+      background: rgba(255,255,255,0.1);
+      transform: translateY(-2px);
+    }
+
+    .footer-line {
+      margin-top: 56px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+    }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 48px; text-align: center; }
+      .hero-badge { margin: 0 auto 24px; }
+      .hero-para { margin-left: auto; margin-right: auto; }
+      .hero-domain-tags { justify-content: center; }
+      .hero-ctas { justify-content: center; }
+      .hero-photo-wrap { order: -1; }
+      .photo-ring { width: 260px; height: 260px; }
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stack-grid { grid-template-columns: 1fr; gap: 20px; }
+      .project-body-inner { grid-template-columns: 1fr; gap: 20px; }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .container { padding: 0 20px; }
+      .photo-ring { width: 220px; height: 220px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .stat-item { padding: 32px 20px; }
+      .project-header { flex-direction: column; gap: 16px; }
+      .project-header-right { flex-direction: row; width: 100%; justify-content: space-between; align-items: center; }
+      .hero-ctas { flex-direction: column; align-items: center; }
+      .hero-ctas a { width: 100%; text-align: center; justify-content: center; }
+      #about, #projects, #stack { padding: 72px 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ────────────────────────────────────── -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">Puja Behera</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#stack">Stack</a></li>
+      <li><a href="mailto:iampujabehera@gmail.com" class="nav-cta">Let's Talk</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#about"    class="m-link">About</a>
+    <a href="#projects" class="m-link">Projects</a>
+    <a href="#stack"    class="m-link">Stack</a>
+    <a href="#contact"  class="m-link">Contact</a>
+  </div>
+</nav>
+
+<!-- ── HERO ───────────────────────────────────── -->
+<section id="hero">
+  <div class="hero-bg-blob"></div>
+  <div class="hero-bg-blob-2"></div>
+  <div class="container">
+    <div class="hero-grid">
+
+      <div class="hero-left">
+        <div class="hero-badge fade-up">Available for APM &amp; PM Roles</div>
+        <h1 class="hero-headline fade-up delay-1">Product Manager.<br>Engineer at heart.</h1>
+        <p class="hero-subline fade-up delay-2">I think like an engineer and lead like a PM.</p>
+        <p class="hero-para fade-up delay-2">I've shipped voice AI that cuts physician documentation time by 80%, a digital finance platform across Ford's European markets, and a multimodal AI agent that navigates insurance denials.<br><br>Not mockups — working products with live URLs.</p>
+        <div class="hero-domain-tags fade-up delay-3">
+          <span class="domain-pill health">🏥 Healthcare AI</span>
+          <span class="domain-pill fintech">💳 Fintech</span>
+          <span class="domain-pill enterprise">🏢 Enterprise SaaS</span>
+        </div>
+        <div class="hero-ctas fade-up delay-4">
+          <a href="#projects" class="btn-primary">View My Work →</a>
+          <a href="mailto:iampujabehera@gmail.com" class="btn-secondary">Let's Talk</a>
+        </div>
+      </div>
+
+      <div class="hero-photo-wrap fade-up delay-2">
+        <div class="photo-ring">
+          <img src="IMG_8430.png.jpg" alt="Puja Behera" />
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS ──────────────────────────────────── -->
+<section id="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item fade-up">
+        <span class="stat-number" data-target="80" data-suffix="%">0%</span>
+        <p class="stat-label">Reduction in physician documentation time</p>
+      </div>
+      <div class="stat-item fade-up delay-1">
+        <span class="stat-number" data-target="35" data-suffix="%">0%</span>
+        <p class="stat-label">Faster loan processing for Ford Europe</p>
+      </div>
+      <div class="stat-item fade-up delay-2">
+        <span class="stat-number" data-target="5" data-suffix="+">0+</span>
+        <p class="stat-label">Years shipping AI and SaaS products</p>
+      </div>
+      <div class="stat-item fade-up delay-3">
+        <span class="stat-number" data-target="3" data-suffix="">0</span>
+        <p class="stat-label">Live deployed products you can click right now</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ──────────────────────────────────── -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+
+      <div class="fade-up">
+        <p class="section-eyebrow">About</p>
+        <div class="about-bio-text">
+          <p>I'm <strong>Puja</strong> — a PM who started as an engineer, which means I've always understood what I'm asking teams to build. Over 5 years across <strong>Deloitte</strong>, <strong>eClinicalWorks</strong>, and <strong>Medinous</strong>, I've shipped products in healthcare AI, fintech, and enterprise SaaS.</p>
+          <p>The domain changes. The discipline doesn't.</p>
+        </div>
+      </div>
+
+      <div class="fade-up delay-1">
+        <div class="timeline-wrap">
+
+          <div class="timeline-item">
+            <div class="tl-dot"></div>
+            <div>
+              <div class="tl-role">Product Manager · <span class="tl-company">Medinous</span></div>
+              <div class="tl-year">2025 – Present</div>
+              <div class="tl-impact">Built CareLoop for UAE hospital networks</div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="tl-dot"></div>
+            <div>
+              <div class="tl-role">Product Analyst · <span class="tl-company">eClinicalWorks</span></div>
+              <div class="tl-year">2023 – 2025</div>
+              <div class="tl-impact">Shipped Sunoh.ai ambient AI scribe + pharmacy module</div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="tl-dot"></div>
+            <div>
+              <div class="tl-role">Product Analyst · <span class="tl-company">Deloitte</span></div>
+              <div class="tl-year">2021 – 2023</div>
+              <div class="tl-impact">Led Ford digital finance platform across 80% of Europe</div>
+            </div>
+          </div>
+
+          <div class="edu-block">
+            <p><strong>B.Tech Information Technology</strong> ITER Bhubaneswar · 2020 · GPA 8.29<br>CSPO Certified · Innovation &amp; Leadership — Deloitte</p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── PROJECTS ────────────────────────────────── -->
+<section id="projects">
+  <div class="container">
+    <div class="fade-up">
+      <p class="section-eyebrow">Work</p>
+      <h2 class="section-headline">Things I've shipped.</h2>
+      <p class="section-subline">Click any card to read the full story.</p>
+    </div>
+
+    <div class="projects-list">
+
+      <!-- CARD 1 — CoverageIQ -->
+      <div class="project-card project-card-1 fade-up" id="card-1">
+        <div class="card-band band-blue"></div>
+        <div class="project-header" onclick="toggleCard('card-1')">
+          <div class="project-header-left">
+            <div class="project-label">Agentic AI · Fintech · FHIR</div>
+            <div class="project-title">CoverageIQ</div>
+            <div class="project-oneliner">An AI agent that fights insurance denials — built as a working product, not a pitch deck.</div>
+            <div class="tag-row">
+              <span class="tag blue">Agentic AI</span>
+              <span class="tag blue">Multimodal</span>
+              <span class="tag blue">FHIR</span>
+              <span class="tag blue">Dialogflow CX</span>
+            </div>
+          </div>
+          <div class="project-header-right">
+            <div class="project-links">
+              <a href="https://benefits-coverage.vercel.app/" class="project-link" target="_blank" rel="noopener" onclick="event.stopPropagation()">Benefits Agent ↗</a>
+              <a href="https://coverage-intelligence.vercel.app/" class="project-link" target="_blank" rel="noopener" onclick="event.stopPropagation()">Coverage Intelligence ↗</a>
+            </div>
+            <div class="toggle-btn">↓</div>
+          </div>
+        </div>
+        <div class="project-body" id="body-card-1">
+          <div class="project-body-inner">
+            <div>
+              <div class="case-label red">🔴 The Problem</div>
+              <p class="case-text">Prior auth and benefits coverage is broken everywhere — not just healthcare. Anywhere humans must navigate dense policy documents to make real-time decisions, they need an agent, not a dashboard. I was given this as a take-home assignment. I shipped a working agent.</p>
+            </div>
+            <div>
+              <div class="case-label blue">🔵 What I Built</div>
+              <p class="case-text">Multimodal AI agent — Dialogflow CX, Vertex AI, FHIR integration. Handles natural language coverage queries, parses denial codes (CARC), and surfaces the next action — not raw policy text.</p>
+            </div>
+            <div>
+              <div class="case-label amber">🟡 The Hard Call</div>
+              <p class="case-text">I deliberately blocked coverage confirmation until CPT codes and prior auth were verified. Most people would have shown the happy path first. Clinical accuracy gated the UX — not the other way around.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 2 — CareLoop -->
+      <div class="project-card project-card-2 fade-up delay-1" id="card-2">
+        <div class="card-band band-purple"></div>
+        <div class="project-header" onclick="toggleCard('card-2')">
+          <div class="project-header-left">
+            <div class="project-label">Healthcare AI · B2B2C · EMR Integration</div>
+            <div class="project-title">CareLoop</div>
+            <div class="project-oneliner">Closing the gap between hospital discharge and patient recovery — before it becomes a readmission.</div>
+            <div class="tag-row">
+              <span class="tag purple">Risk Scoring</span>
+              <span class="tag purple">EMR Integration</span>
+              <span class="tag purple">B2B2C</span>
+              <span class="tag purple">UAE / GCC</span>
+            </div>
+          </div>
+          <div class="project-header-right">
+            <div class="project-links">
+              <a href="https://careloopstory.netlify.app/" class="project-link" target="_blank" rel="noopener" onclick="event.stopPropagation()">See the Story ↗</a>
+            </div>
+            <div class="toggle-btn">↓</div>
+          </div>
+        </div>
+        <div class="project-body" id="body-card-2">
+          <div class="project-body-inner">
+            <div>
+              <div class="case-label red">🔴 The Problem</div>
+              <p class="case-text">Hospitals lose sight of patients the moment they walk out the door. No visibility, no follow-through, no early warning. CareLoop was built to fix that — without replacing existing HMIS systems.</p>
+            </div>
+            <div>
+              <div class="case-label blue">🔵 What I Built</div>
+              <p class="case-text">A risk-scoring layer that identifies which patients are likely to disengage post-discharge. Sits on top of existing infrastructure. Tells care teams exactly who to call and when.</p>
+            </div>
+            <div>
+              <div class="case-label amber">🟡 The Hard Call</div>
+              <p class="case-text">Cut the MVP to 3 screens — risk queue, patient detail, escalation. Killed the analytics dashboard everyone wanted. A dashboard without workflow integration is just another tab nobody opens.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 3 — Sunoh.ai -->
+      <div class="project-card project-card-3 fade-up delay-2" id="card-3">
+        <div class="card-band band-amber"></div>
+        <div class="project-header" onclick="toggleCard('card-3')">
+          <div class="project-header-left">
+            <div class="project-label">Voice AI · GPT-4o · HIPAA · Azure OpenAI</div>
+            <div class="project-title">Sunoh.ai</div>
+            <div class="project-oneliner">Ambient AI scribe that listens to doctors and writes the notes — with zero tolerance for hallucination.</div>
+            <div class="tag-row">
+              <span class="tag amber">Voice AI</span>
+              <span class="tag amber">GPT-4o</span>
+              <span class="tag amber">HIPAA</span>
+              <span class="tag amber">EMR Integration</span>
+            </div>
+          </div>
+          <div class="project-header-right">
+            <div class="project-links">
+              <span style="font-size:12px;color:var(--secondary);font-style:italic;">Proprietary — no public link</span>
+            </div>
+            <div class="toggle-btn">↓</div>
+          </div>
+        </div>
+        <div class="project-body" id="body-card-3">
+          <div class="project-body-inner">
+            <div>
+              <div class="case-label red">🔴 The Problem</div>
+              <p class="case-text">Physicians spend 2+ hours daily on documentation. That's time not spent on patients. Sunoh.ai listens to clinical conversations and generates structured notes automatically — but in healthcare, one wrong word is a patient safety event.</p>
+            </div>
+            <div>
+              <div class="case-label blue">🔵 What I Built</div>
+              <p class="case-text">Azure OpenAI + GPT-4o transcription, with a hallucination mitigation layer using MediSpan and IMO compendiums. Every drug, diagnosis, and procedure cross-checked before it reaches the physician.</p>
+            </div>
+            <div>
+              <div class="case-label amber">🟡 The Hard Call</div>
+              <p class="case-text">Pharmacy module: auto-resolve demographic mismatches with a full audit trail vs flag-and-pause. Chose auto-resolve. Reduced prescription hold time significantly. Stayed HIPAA-compliant.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 4 — Coming Soon -->
+      <div class="project-card dimmed fade-up delay-3">
+        <div class="card-band band-gray"></div>
+        <div class="project-header">
+          <div class="project-header-left">
+            <div class="project-title" style="font-size:24px;color:#999;">Next Project</div>
+            <div class="project-oneliner">Something outside healthcare. Watch this space.</div>
+          </div>
+          <div class="project-header-right">
+            <span class="in-progress-badge">In Progress</span>
+          </div>
+        </div>
+        <div class="coming-soon-text">Building something outside healthcare to demonstrate domain transferability — fintech, quick commerce, or enterprise SaaS.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── STACK ───────────────────────────────────── -->
+<section id="stack">
+  <div class="container">
+    <div class="fade-up" style="margin-bottom:52px;">
+      <p class="section-eyebrow">Tools</p>
+      <h2 class="section-headline">What I actually ship with.</h2>
+    </div>
+    <div class="stack-grid">
+      <div class="stack-card fade-up">
+        <div class="stack-col-label">Models in production</div>
+        <ul class="stack-list">
+          <li>GPT-4o via Azure OpenAI</li>
+          <li>Claude Sonnet</li>
+          <li>Dialogflow CX</li>
+          <li>Vertex AI</li>
+        </ul>
+      </div>
+      <div class="stack-card fade-up delay-1">
+        <div class="stack-col-label">Integrations built</div>
+        <ul class="stack-list">
+          <li>FHIR / SMART on FHIR</li>
+          <li>eClinicalWorks EMR</li>
+          <li>MediSpan + IMO compendiums</li>
+          <li>CARC denial code taxonomy</li>
+          <li>Netlify / Vercel deployments</li>
+        </ul>
+      </div>
+      <div class="stack-card fade-up delay-2">
+        <div class="stack-col-label">How I work as an AI PM</div>
+        <ul class="stack-list">
+          <li>Prototype-first development</li>
+          <li>Hallucination mitigation strategy</li>
+          <li>Model selection rationale in PRDs</li>
+          <li>Integration-layer risk assessment</li>
+          <li>HIPAA compliance frameworks</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ─────────────────────────────────── -->
+<section id="contact">
+  <div class="container">
+    <h2 class="contact-headline fade-up">Let's build something.</h2>
+    <p class="contact-sub fade-up delay-1">Open to APM and PM roles — AI, fintech, SaaS, edtech, quick commerce, ecommerce.</p>
+    <div class="contact-btns fade-up delay-2">
+      <a href="mailto:iampujabehera@gmail.com" class="btn-white">Email Me</a>
+      <a href="https://www.linkedin.com/in/pujabehera2025/" class="btn-white-outline" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+    <p class="footer-line fade-up delay-3">Bengaluru, India · Open to remote and hybrid roles globally</p>
+  </div>
+</section>
+
+<script>
+  // ── NAV SCROLL ──────────────────────────────
+  const navEl = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    navEl.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+
+  // ── HAMBURGER ───────────────────────────────
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+
+  document.querySelectorAll('.m-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    });
+  });
+
+  // ── SMOOTH SCROLL ────────────────────────────
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 72, behavior: 'smooth' });
+      }
+    });
+  });
+
+  // ── FADE-UP OBSERVER ─────────────────────────
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+
+  // ── COUNT-UP ──────────────────────────────────
+  function countUp(el) {
+    const target = parseInt(el.dataset.target, 10);
+    const suffix = el.dataset.suffix || '';
+    const duration = 1400;
+    const steps = 50;
+    const increment = target / steps;
+    let step = 0;
+    const timer = setInterval(() => {
+      step++;
+      el.textContent = Math.min(Math.round(increment * step), target) + suffix;
+      if (step >= steps) clearInterval(timer);
+    }, duration / steps);
+  }
+
+  const statsSection = document.getElementById('stats');
+  const statsIO = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      document.querySelectorAll('.stat-number').forEach(countUp);
+      statsIO.unobserve(statsSection);
+    }
+  }, { threshold: 0.3 });
+
+  if (statsSection) statsIO.observe(statsSection);
+
+  // ── ACCORDION ───────────────────────────────
+  function toggleCard(id) {
+    const card = document.getElementById(id);
+    if (!card || card.classList.contains('dimmed')) return;
+    const body = document.getElementById('body-' + id);
+    const isOpen = card.classList.contains('open');
+
+    document.querySelectorAll('.project-card.open').forEach(c => {
+      c.classList.remove('open');
+      const b = c.querySelector('.project-body');
+      if (b) b.style.maxHeight = '0';
+    });
+
+    if (!isOpen) {
+      card.classList.add('open');
+      body.style.maxHeight = body.scrollHeight + 80 + 'px';
+    }
+  }
+</script>
+</body>
+</html>
